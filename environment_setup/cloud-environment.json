@@ -14,6 +14,7 @@
       "type": "string",
       "defaultValue": "eastus",
       "allowedValues": [
+        "australiaeast",
         "eastus",
         "eastus2",
         "southcentralus",
