@@ -28,20 +28,13 @@ def split_data(data_df):
 # Train the model, return the model
 def train_model(data, parameters):
     """Train a model with the given datasets and parameters"""
-    # The object returned by split_data is a tuple.
-    # Access train_data with data[0] and valid_data with data[1]
-
-    train_data = data[0]
-    valid_data = data[1]
-    
-    # Add valid_data to the parameters
-    parameters['valid_sets'] = [valid_data]
-    parameters['valid_names'] = ['valid']
+    train_data, valid_data = data
 
     model = lightgbm.train(parameters,
                            train_data,
-                           num_boost_round=500
-                           )
+                           valid_sets=[valid_data],
+                           num_boost_round=500,
+                           early_stopping_rounds=20)
 
     return model
 
