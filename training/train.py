@@ -3,6 +3,7 @@ import pandas as pd
 from sklearn import metrics
 from sklearn.model_selection import train_test_split
 import lightgbm
+from lightgbm import early_stopping
 
 # Split the dataframe into test and train data
 
