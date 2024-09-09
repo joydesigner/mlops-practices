@@ -65,5 +65,4 @@ def __get_test_datasets():
     train_data = lightgbm.Dataset(X_train, y_train)
     valid_data = lightgbm.Dataset(X_test, y_test)
 
-    data = (train_data, valid_data)
-    return data
+    return (train_data, valid_data)
