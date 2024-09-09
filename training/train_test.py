@@ -1,37 +1,48 @@
 import lightgbm
 import numpy as np
 import pandas as pd
+import pytest
+from sklearn.metrics import roc_auc_score
+
+# functions to test are imported from train.py
 from train import split_data, train_model, get_model_metrics
 
-"""A set of simple unit tests for protecting against regressions in train.py"""
+"""A set of improved unit tests for protecting against regressions in train.py"""
 
-def test_split_data():
+@pytest.fixture
+def sample_data():
     test_data = {
         'id': [0, 1, 2, 3, 4],
         'target': [0, 0, 1, 0, 1],
         'col1': [1, 2, 3, 4, 5],
         'col2': [2, 1, 1, 2, 1]
     }
+    return pd.DataFrame(data=test_data)
 
-    data_df = pd.DataFrame(data=test_data)
-    data = split_data(data_df)
+def test_split_data(sample_data):
+    train_data, valid_data = split_data(sample_data)
 
     # verify that columns were removed correctly
-    assert "target" not in data[0].data.columns
-    assert "id" not in data[0].data.columns
-    assert "col1" in data[0].data.columns
+    assert "target" not in train_data.data.columns
+    assert "id" not in train_data.data.columns
+    assert "col1" in train_data.data.columns
+    assert "col2" in train_data.data.columns
 
-    # verify that data was split as desired
-    assert data[0].data.shape == (4, 2)
-    assert data[1].data.shape == (1, 2)
+    # verify that data was split as desired (80% train, 20% valid)
+    assert train_data.num_data() == 4
+    assert valid_data.num_data() == 1
 
 def test_train_model():
     data = __get_test_datasets()
 
     params = {
-        "learning_rate": 0.05,
+        "objective": "binary",
         "metric": "auc",
-        "min_data": 1
+        "boosting_type": "gbdt",
+        "learning_rate": 0.05,
+        "num_leaves": 32,
+        "min_data_in_leaf": 1,
+        "verbose": -1
     }
 
     model = train_model(data, params)
@@ -41,19 +52,24 @@ def test_train_model():
         assert param_name in model.params
         assert params[param_name] == model.params[param_name]
 
+    # verify that the model has been trained
+    assert model.num_trees() > 0
+
 def test_get_model_metrics():
     class MockModel:
         @staticmethod
         def predict(data):
-            return np.array([0, 0])  # Mock predictions
+            return np.array([0.1, 0.9])
 
     data = __get_test_datasets()
+
     metrics = get_model_metrics(MockModel(), data)
 
     # verify that metrics is a dictionary containing the auc value.
     assert "auc" in metrics
     auc = metrics["auc"]
-    np.testing.assert_almost_equal(auc, 0.5)
+    expected_auc = roc_auc_score(data[1].label, [0.1, 0.9])
+    np.testing.assert_almost_equal(auc, expected_auc, decimal=5)
 
 def __get_test_datasets():
     """This is a helper function to set up some test data"""
@@ -64,5 +80,4 @@ def __get_test_datasets():
 
     train_data = lightgbm.Dataset(X_train, y_train)
     valid_data = lightgbm.Dataset(X_test, y_test)
-
     return (train_data, valid_data)
