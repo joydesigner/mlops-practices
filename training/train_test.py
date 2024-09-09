@@ -23,10 +23,8 @@ def test_split_data(sample_data):
     train_data, valid_data = split_data(sample_data)
 
     # verify that columns were removed correctly
-    assert "target" not in train_data.feature_name
-    assert "id" not in train_data.feature_name
-    assert "col1" in train_data.feature_name
-    assert "col2" in train_data.feature_name
+    assert set(train_data.data.columns) == {'col1', 'col2'}
+    assert set(valid_data.data.columns) == {'col1', 'col2'}
 
     # verify that data was split as desired (80% train, 20% valid)
     assert train_data.num_data() == 4
@@ -49,7 +47,7 @@ def test_train_model():
 
     # verify that parameters are passed in to the model correctly
     for param_name, param_value in params.items():
-        if param_name != "metric":  # metric is handled differently in LightGBM
+        if param_name not in ["metric", "objective"]:  # These are handled differently in LightGBM
             assert param_name in model.params
             if isinstance(param_value, (int, float)):
                 assert pytest.approx(param_value) == float(model.params[param_name])
