@@ -40,8 +40,8 @@ def train_model(data, parameters):
 
     model = lightgbm.train(parameters,
                            train_data,
-                           num_boost_round=500,
-                           early_stopping_rounds=20)
+                           num_boost_round=500
+                           )
 
     return model
 

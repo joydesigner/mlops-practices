@@ -30,7 +30,6 @@ def test_train_model():
 
     params = {
         "learning_rate": 0.05,
-        "objective": "binary",
         "metric": "auc",
         "min_data": 1
     }
