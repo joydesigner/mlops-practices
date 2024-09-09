@@ -37,11 +37,11 @@ def train_model(data, parameters):
     # Add valid_data to the parameters
     parameters['valid_sets'] = [valid_data]
     parameters['valid_names'] = ['valid']
-    parameters['early_stopping_rounds'] = 20  # Move this to parameters
 
     model = lightgbm.train(parameters,
                            train_data,
-                           num_boost_round=500)
+                           num_boost_round=500,
+                           early_stopping_rounds=20)
 
     return model
 
