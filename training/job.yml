@@ -10,8 +10,8 @@ inputs:
     type: uri_folder
     path: azureml:insurance_dataset:1
 environment: 
-  name: azureml:AzureML-sklearn-0.24-ubuntu18.04-py37-cpu@latest
+  image: mcr.microsoft.com/azureml/openmpi3.1.2-ubuntu18.04:latest
   conda_file: conda_dependencies.yml
 compute: azureml:amlcluster
-experiment_name: dataset_profile
+experiment_name:  insurance_model_training
 description: Training job for insurance model
