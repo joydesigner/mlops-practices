@@ -1,5 +1,0 @@
-$schema: https://azuremlschemas.azureedge.net/latest/data.schema.json
-name: local_insurance_data
-description: Data asset for insurance data created from local file.
-type: uri_file
-path: insurance.csv

@@ -1,0 +1,11 @@
+$schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
+code: 
+  local_path: .
+command: >
+  python train_aml.py
+environment: 
+  name: azureml:AzureML-sklearn-0.24-ubuntu18.04-py37-cpu@latest
+  conda_file: conda_dependencies.yml
+  version: 1
+compute: azureml:amlcluster
+experiment_name: dataset_profile
