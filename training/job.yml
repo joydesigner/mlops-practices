@@ -7,7 +7,7 @@ command: >-
   --dataset_name insurance_dataset
 inputs:
   training_data:
-    type: uri_folder
+    type: mltable
     path: azureml:insurance_dataset:1
 environment: 
   image: mcr.microsoft.com/azureml/openmpi3.1.2-ubuntu18.04:latest
