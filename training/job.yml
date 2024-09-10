@@ -1,5 +1,6 @@
 $schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
-code: training
+code:
+  local_path: .
 command: >
   python train_aml.py
 environment: 
