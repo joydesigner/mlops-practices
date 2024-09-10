@@ -1,11 +1,14 @@
 $schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
 code: .
-command: >
+command: >-
   python train_aml.py
+  --data_file_path ${{inputs.training_data}}
+  --model_name insurance_model.pkl
+  --dataset_name insurance_dataset
 inputs:
   training_data:
-    data: azureml:insurance_dataset_ci:1
-    mode: ro_mount
+    type: uri_folder
+    path: azureml:insurance_dataset:1
 environment: 
   name: azureml:AzureML-sklearn-0.24-ubuntu18.04-py37-cpu@latest
   conda_file: conda_dependencies.yml
