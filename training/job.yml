@@ -3,10 +3,14 @@ code:
   local_path: .
 command: >
   python train_aml.py
+inputs:
+  training_data:
+    data: azureml:insurance_dataset_ci:1
+    mode: mount
 environment: 
-  name: azureml:AzureML-sklearn-0.24-ubuntu18.04-py37-cpu@latest
+  name: azureml:AzureML-sklearn-0.24-ubuntu18.04-py37-cpu
   conda_file: conda_dependencies.yml
-  version: 1
+  version: latest
 compute: azureml:amlcluster
 experiment_name: dataset_profile
-description: Train a model
+description: Training job for insurance model
