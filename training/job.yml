@@ -1,6 +1,5 @@
 $schema: https://azuremlschemas.azureedge.net/latest/commandJob.schema.json
-code: 
-  local_path: .
+code: training
 command: >
   python train_aml.py
 environment: 
@@ -9,3 +8,4 @@ environment:
   version: 1
 compute: azureml:amlcluster
 experiment_name: dataset_profile
+description: Train a model
