@@ -71,6 +71,7 @@ To explore and implement these MLOps practices:
    conda activate project_environment
 
 4. **Run the Training Script**:
+
    ```python train_aml.py --data_file_path <path_to_data> --model_name <model_name> --dataset_name <dataset_name>
 
 5. **Monitor the Experiment**:
