@@ -67,12 +67,16 @@ To explore and implement these MLOps practices:
 3. **Configure the Environment**:
 - Create a new Conda environment using the provided conda_dependencies.yml file:
 
-   ```conda env create -f conda_dependencies.yml
+   ```
+   conda env create -f conda_dependencies.yml
    conda activate project_environment
+   ```
 
 4. **Run the Training Script**:
 
-   ```python train_aml.py --data_file_path <path_to_data> --model_name <model_name> --dataset_name <dataset_name>
+   ```
+   python train_aml.py --data_file_path <path_to_data> --model_name <model_name>     --dataset_name <dataset_name>
+   ```
 
 5. **Monitor the Experiment**:
 - Use Azure Machine Learning Studio to monitor the experiment, check logs, and evaluate model performance.
