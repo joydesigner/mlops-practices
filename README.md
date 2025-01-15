@@ -34,6 +34,24 @@ Azure Machine Learning offers several MLOps capabilities:
 
 ![ML Lifecycle](./architecture/ml-lifecycle.png)
 
+## Repository Structure
+
+This repository includes the following key files:
+
+- **`job.yml`**: Defines the Azure Machine Learning job configuration, specifying the training script, inputs, environment, compute resources, and experiment details.
+
+- **`train_insurance.runconfig`**: Specifies the runtime configuration for the training job, including environment settings, data references, and Docker image details.
+
+- **`parameters.json`**: Contains hyperparameters and training configurations used by the training script to fine-tune the machine learning model.
+
+- **`train_aml.py`**: The main training script that orchestrates data loading, model training, evaluation, and registration within Azure Machine Learning.
+
+- **`train_test.py`**: Includes unit tests for the training functions to ensure code reliability and correctness.
+
+- **`train.py`**: Contains core functions for data splitting, model training, and evaluation metrics computation.
+
+- **`conda_dependencies.yml`**: Lists the dependencies and packages required for the project, facilitating environment setup and reproducibility.
+
 ## Getting Started
 
 To explore and implement these MLOps practices:
@@ -42,3 +60,18 @@ To explore and implement these MLOps practices:
 
    ```bash
    git clone https://github.com/joydesigner/mlops-practices.git
+
+2. **Set Up Azure Services**:
+- Ensure you have access to Azure Machine Learning and Azure DevOps.
+
+3. **Configure the Environment**:
+- Create a new Conda environment using the provided conda_dependencies.yml file:
+
+   ```conda env create -f conda_dependencies.yml
+   conda activate project_environment
+
+4. **Run the Training Script**:
+   ```python train_aml.py --data_file_path <path_to_data> --model_name <model_name> --dataset_name <dataset_name>
+
+5. **Monitor the Experiment**:
+- Use Azure Machine Learning Studio to monitor the experiment, check logs, and evaluate model performance.
